@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>pftswebapp web app</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/main.css') }}"
+    />
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block head %}{% endblock %}
+  </head>
+
+  <body>
+    <div id="uForm">
+      <form
+        name="mainform"
+        id="mainform"
+        method="POST"
+        action="/"
+        enctype="multipart/form-data"
+        style="padding: 5px"
+      >
+        <b>pftswebapp v0.0.1</b>
+
+        <table class="tLeft">
+          <tr>
+            <td class="tLeft" colspan="4">
+              <span class="greyText">Search Database</span>
+            </td>
+          </tr>
+          <tr>
+            {% for k, v in all_db.items() -%}
+            <td class="tRight">
+              <label disabled class="form-switch"
+                ><input
+                  {{v}}
+                  type="radio"
+                  id="{{k}}"
+                  name="database"
+                  value="{{k}}" /><i></i
+              ></label>
+            </td>
+            <td class="tLeft">{{k | stripsqlite3}}</td>
+            {% if loop.index is divisibleby(2) -%}
+          </tr>
+          <tr>
+            {%- endif %} 
+            {%- endfor %}
+          </tr>
+        </table>
+
+        <br /><span id="clearText">Clear Text</span><br />
+
+        <textarea
+          required
+          rows="1"
+          id="keyword"
+          name="keyword"
+          placeholder="enter text"
+        >{{ keyword | default('') }}</textarea>
+
+        <br /><input
+          type="submit"
+          id="searchButton"
+          style="font-size: small"
+          value="Search"
+        /><br /><br />
+
+        <table class="tLeft">
+          <tr>
+            <td class="tLeft" colspan="4">
+              <span class="greyText">Search Mode</span>
+            </td>
+          </tr>
+          <tr>
+            {% for k, v in all_smodes.items() -%}
+            <td class="tRight">
+              <label class="form-switch"
+                ><input
+                  {{v}}
+                  type="radio"
+                  id="{{k}}"
+                  name="searchmode"
+                  value="{{k}}" /><i></i
+              ></label>
+            </td>
+            <td class="tLeft">{{ k | title }}</td>
+    <!--         {% if loop.index is divisibleby(2) -%}
+              </tr>
+              <tr>
+    {%- endif %}  -->
+            {%- endfor %}
+          </tr>
+          <tr>
+            <td class="tLeft" colspan="4">
+              <span class="greyText">Order results by</span>
+            </td>
+          </tr>
+          <tr>
+            {% for k, v in all_orders.items() -%}
+            <td class="tRight">
+              <label class="circleRadio"
+                ><input
+                  {{v}}
+                  type="radio"
+                  id="{{k}}"
+                  name="orderby"
+                  value="{{k}}" /><i></i
+              ></label>
+            </td>
+            <td class="tLeft">{{ k | title }}</td>
+    <!--         {% if loop.index is divisibleby(2) -%}
+              </tr>
+              <tr>
+    {%- endif %}  -->
+            {%- endfor %}
+          </tr>
+        </table>
+
+        <table class="tCenter">
+          <tr>
+            <td class="tLeft">Word distance range</td>
+            <td class="tLeft">
+              <input
+                required
+                type="number" 
+                min="0" 
+                max="10" 
+                id="distancevalue"
+                name="distancevalue"
+                value="{{distance_value | default(10)}}"
+                placeholder="default & max: 10"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td class="tLeft">Limit hit setting</td>
+            <td class="tLeft">
+              <input
+                required
+                type="number" 
+                min="1" 
+                id="hitlimit"
+                name="hitlimit"
+                value="{{hit_limit | default(100)}}"
+                placeholder="100"
+              />
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+    <br />
+    {% block body %}{% endblock %}
+  </body>
+</html>

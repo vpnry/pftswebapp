@@ -1,0 +1,5 @@
+__pycache__
+pftswebapp/__pycache__
+build/
+indexed_database/
+documents/

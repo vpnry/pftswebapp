@@ -10,7 +10,7 @@ def format_result(tup):
 
 
 def search_this(keyword, db_path, search_mode='distance',
-                distance_value=10, hit_limit=100, order_by='rank'):
+                distance_value=10, extract_len=64, hit_limit=100, order_by='rank'):
     if not os.path.isfile(db_path):
         return [(f'The selected {db_path} is not found!', '')]
     conn = sqlite3.connect(db_path)
@@ -20,6 +20,8 @@ def search_this(keyword, db_path, search_mode='distance',
         distance_value = 10
     if not hit_limit:
         hit_limit = 100
+    if not extract_len:
+        extract_len = 64
 
     u1 = '<u>'
     u2 = '</u>'
@@ -30,7 +32,7 @@ def search_this(keyword, db_path, search_mode='distance',
 
     # distance: (default) word distance search
     query_me = query_distance = f'''
-        SELECT path, snippet(pn, 1, '{u1}', '{u2}', ' ~~ ',64)
+        SELECT path, snippet(pn, 1, '{u1}', '{u2}', ' ~~ ',{extract_len})
         cont FROM pn
         WHERE cont MATCH 'NEAR("{esc_keyword}", {distance_value})'
         ORDER BY {order_by} LIMIT {hit_limit}
@@ -38,7 +40,7 @@ def search_this(keyword, db_path, search_mode='distance',
 
     # exact: exact phrase search
     qry_exact = f'''
-        SELECT path, snippet(pn, 1, '{u1}', '{u2}', ' ~~ ',64)
+        SELECT path, snippet(pn, 1, '{u1}', '{u2}', ' ~~ ',{extract_len})
         cont FROM pn
         WHERE cont MATCH '"{esc_keyword}"'
         ORDER BY {order_by} LIMIT {hit_limit}
@@ -46,7 +48,7 @@ def search_this(keyword, db_path, search_mode='distance',
 
     # prefix: word prefix search
     qry_prefix = f'''
-        SELECT path, snippet(pn, 1, '{u1}', '{u2}', ' ~~ ',64)
+        SELECT path, snippet(pn, 1, '{u1}', '{u2}', ' ~~ ',{extract_len})
         cont FROM pn
         WHERE cont MATCH '"{esc_keyword}" * '
         ORDER BY {order_by} LIMIT {hit_limit}

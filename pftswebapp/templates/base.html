@@ -22,7 +22,7 @@
         enctype="multipart/form-data"
         style="padding: 5px"
       >
-        <b>pftswebapp v0.0.1</b>
+        <b>pftswebapp v0.0.2</b>
 
         <table class="tLeft">
           <tr>
@@ -135,6 +135,24 @@
               />
             </td>
           </tr>
+          <tr>
+            <td class="tLeft">Extract text length</td>
+
+            <td class="tLeft">
+              <input
+                required
+                type="number" 
+                min="8" 
+                id="extractlen"
+                name="extractlen"
+                value="{{extract_len | default(64)}}"
+                placeholder="64"
+              />
+            </td>
+
+            <!-- <td class="tLeft"><input id="etl" name="etl" value="64" placeholder="Accept: 0-64" /></td> -->
+          </tr>
+
           <tr>
             <td class="tLeft">Limit hit setting</td>
             <td class="tLeft">

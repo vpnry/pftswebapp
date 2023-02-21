@@ -58,6 +58,7 @@ def web_fts(document_root='documents', filter_dir_list=None,
             db_path = DB_DICT['dbpath'][db_name]
             search_mode = request.form['searchmode']
             distance_value = request.form['distancevalue']
+            extract_len = request.form['extractlen']
             hit_limit = request.form['hitlimit']
             order_by = request.form['orderby']
 
@@ -76,6 +77,7 @@ def web_fts(document_root='documents', filter_dir_list=None,
                 db_path=db_path,
                 search_mode=search_mode,
                 distance_value=distance_value,
+                extract_len=extract_len,
                 hit_limit=hit_limit,
                 order_by=order_by)
 
@@ -86,6 +88,7 @@ def web_fts(document_root='documents', filter_dir_list=None,
                 all_db=all_db,
                 search_res=search_res,
                 all_orders=all_orders,
+                extract_len=extract_len,
                 hit_limit=hit_limit,
                 all_smodes=all_smodes,
                 distance_value=distance_value)

@@ -16,7 +16,7 @@ setup(
     packages=find_packages('.'),
     # Start with a small number and increase it with
     # every change you make https://semver.org
-    version='0.0.1',
+    version='0.0.2',
     # Short description of your library
     description='A simple Pythonic full text search web app powered by Sqlite3 FTS5',
     # Long description of your library
@@ -36,7 +36,7 @@ setup(
                 'static/js/*.*',
                 'static/css/*.*']},
     # List of keywords
-    keywords=['offline full text search', 'fts5', 'termux'],
+    keywords=['offline full text search', 'sqlite', 'fts5', 'termux'],
     # List of packages to install with this one
     python_requires='>=3.6.0',
     install_requires=[

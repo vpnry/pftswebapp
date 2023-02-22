@@ -94,26 +94,23 @@ app.run(debug=False)
 
 ### Termux Android app
 
-Download and install the Termux app and the Termux Widget app from the F-Droid store (for newer versions). Once installed, use the Termux Widget to place a shortcut on the phone's home screen for easy access.
+Download and install the Termux app and the Termux Widget app from the **F-Droid** store (for newer versions). Once installed, use the Termux Widget to place a shortcut on the phone's home screen for easy access.
 
-To create shortcut, in Termux, create `~/.shortcuts/pyfts.sh` file with the following contents:
+To create a shortcut, in Termux, create `~/.shortcuts/pyfts.sh` file with the following contents:
 
 ```bash 
 
 # ~/.shortcuts/pyfts.sh
-
-echo "Starting Python FTS"
-cd /storage/emulated/0/python_fts/
-
+echo "Starting Python FTS" && cd /storage/emulated/0/python_fts/ && python3 example_app.py &
+while ! nc -z 127.0.0.1 5000; do
+  sleep 0.5
+done
 termux-open http://127.0.0.1:5000
 
-python3 example_app.py 
-
 ```
-
+(Partly modified with ChatGPT)
 
 Then `chmod +777 ~/.shortcuts/pyfts.sh`
-
 
 + `/storage/emulated/0/python_fts/` is the place where we created `example_app.py`.
 
